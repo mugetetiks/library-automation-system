@@ -1,0 +1,122 @@
+body {
+  font-family: 'Arial, sans-serif';
+  background-color: #5b0404;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.header {
+  background-color: #f4dcd0; 
+  padding: 1rem;
+}
+
+.header a {
+  color: #5b0404 !important;
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.header a:hover {
+  text-decoration: underline;
+}
+
+.search-bar-container {
+  background-color: #b22222;
+  padding: 200px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.search-bar-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  
+  width: 100%;
+  height: 100%;
+  background-image: url('./assets/pattern4.png');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.7; /* %50 şeffaflık */
+  z-index: 1;
+}
+
+
+.search-bar-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 600px;
+  padding: 0 15px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 25px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  width: 100%;
+}
+
+.search-bar input {
+  border: none;
+  outline: none;
+  flex: 1;
+  padding: 10px;
+  border-radius: 25px;
+}
+
+.search-bar .search-icon {
+  margin-left: 10px;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  padding: 0;
+}
+
+.search-bar .search-icon i {
+  font-size: 24px;
+  color: #333;
+}
+
+.events-section {
+  background-color: #5b0404;
+  text-align: center;
+  margin-top: 40px;
+  flex: 1;
+}
+
+.event-card {
+  margin: 20px;
+  text-align: center;
+}
+
+.event-card img {
+  width: 150px;
+  height: 200px;
+  display: block;
+  margin: 0 auto;
+}
+
+.event-card p {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+footer {
+  background-color: #fae7e0;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  margin-top: auto;
+}
