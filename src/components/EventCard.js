@@ -1,10 +1,10 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 
-const EventCard = ({ title }) => {
+const EventCard = ({ title, src }) => {
   return (
     <Card className="event-card">
-      <Card.Img variant="top" src="https://via.placeholder.com/150x200" alt={title} />
+      <Card.Img variant="top" src={src} alt={title} />
       <Card.Body>
         <Card.Title>{title}</Card.Title>
       </Card.Body>
@@ -13,3 +13,4 @@ const EventCard = ({ title }) => {
 };
 
 export default EventCard;
+

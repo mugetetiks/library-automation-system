@@ -122,12 +122,12 @@ body {
 }
 
 .event-card p {
-  margin-top: 10px;
+  
   font-weight: bold;
 }
 
 footer {
-  background-color: #fae7e0;
+  background-color: #f4dcd0 !important;
   color: white;
   padding: 1rem;
   text-align: center;
