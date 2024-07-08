@@ -38,13 +38,13 @@ const App = () => {
       <div className="d-flex flex-column min-vh-100">
         <Header role={role} />
         <Routes>
-          <Route path="/" element={role ? (role === 'admin' ? <Navigate to="/admin" /> : <Navigate to="/member" />) : <><HomePage /><Footer /></>} />
-          <Route path="/login" element={role ? (role === 'admin' ? <Navigate to="/admin" /> : <Navigate to="/member" />) : <><Login /><Footer /></>} />
+          <Route path="/" element={role ? (role === 'admin' ? <Navigate to="/admin" replace /> : <Navigate to="/member" replace />) : <><HomePage /><Footer /></>} />
+          <Route path="/login" element={role ? (role === 'admin' ? <Navigate to="/admin" replace /> : <Navigate to="/member" replace />) : <><Login /><Footer /></>} />
           <Route path="/signup" element={<><Signup /><Footer /></>} />
-          <Route path="/admin" element={role === 'admin' ? <AdminHomePage /> : <Navigate to="/login" />} />
-          <Route path="/member" element={role === 'member' ? <MemberHomePage /> : <Navigate to="/login" />} />
+          <Route path="/admin" element={role === 'admin' ? <AdminHomePage /> : <Navigate to="/login" replace />} />
+          <Route path="/member" element={role === 'member' ? <MemberHomePage /> : <Navigate to="/login" replace />} />
           <Route path="/logout" element={<Logout />} />
-          <Route path="/admin/add-document" element={role === 'admin' ? <AddDocument /> : <Navigate to="/login" />} />
+          <Route path="/admin/add-document" element={role === 'admin' ? <AddDocument /> : <Navigate to="/login" replace />} />
         </Routes>
       </div>
     </Router>

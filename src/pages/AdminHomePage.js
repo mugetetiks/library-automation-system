@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Accordion } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import UserProfile from '../services/userProfile';
@@ -6,13 +6,17 @@ import UserProfile from '../services/userProfile';
 const AdminHomePage = () => {
   const navigate = useNavigate();
 
-  React.useEffect(() => {
-    const username = UserProfile.getName();
-    const role = UserProfile.getRole();
+  useEffect(() => {
+    const checkUser = () => {
+      const username = UserProfile.getName();
+      const role = UserProfile.getRole();
 
-    if (!username || role !== 'admin') {
-      navigate('/login', { replace: true });
-    }
+      if (!username || role !== 'admin') {
+        navigate('/login', { replace: true });
+      }
+    };
+
+    checkUser();
   }, [navigate]);
 
   return (
