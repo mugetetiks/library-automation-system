@@ -4,6 +4,8 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const authRoutes = require('./routes/authRoutes');
 const documentRoutes = require('./routes/documentRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
+const departmentRoutes = require('./routes/departmentRoutes');
 const db = require('./config/db');
 
 const app = express();
@@ -30,6 +32,8 @@ db.connect(err => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/documents', documentRoutes);
+app.use('/api/categories', categoryRoutes);
+app.use('/api/departments', departmentRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
