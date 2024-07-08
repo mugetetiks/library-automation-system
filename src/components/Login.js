@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import UserProfile from '../services/userProfile';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -12,15 +11,14 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/login', { username, password, role });
+      const res = await axios.post('http://localhost:5000/api/auth/login', { username, password, role }, { withCredentials: true });
       alert(res.data.msg);
-      UserProfile.setName(username);
-      UserProfile.setRole(role);
       if (res.data.role === 'admin') {
         navigate('/admin');
-      } else {
-        navigate('/');
+      } else if (res.data.role === 'member') {
+        navigate('/member');
       }
+      window.location.reload(); // Sayfanın yenilenmesini sağla
     } catch (err) {
       console.error('Login error:', err);
       const errorMsg = err.response && err.response.data && err.response.data.msg ? err.response.data.msg : 'Error occurred during login';

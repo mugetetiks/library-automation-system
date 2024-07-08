@@ -13,7 +13,7 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/signup', { username, firstName, lastName, password, role });
+      const res = await axios.post('http://localhost:5000/api/auth/signup', { username, firstName, lastName, password, role }, { withCredentials: true });
       alert(res.data.msg);
       if (role === 'admin') {
         navigate('/admin');

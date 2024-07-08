@@ -1,6 +1,5 @@
 import React from 'react';
 import { Accordion } from 'react-bootstrap';
-import AdminNavbar from '../components/AdminNavbar';
 import { Link, useNavigate } from 'react-router-dom';
 import UserProfile from '../services/userProfile';
 
@@ -12,13 +11,12 @@ const AdminHomePage = () => {
     const role = UserProfile.getRole();
 
     if (!username || role !== 'admin') {
-      navigate('/login');
+      navigate('/login', { replace: true });
     }
   }, [navigate]);
 
   return (
     <div className="admin-homepage">
-      <AdminNavbar />
       <div className="container mt-4">
         <h1>Admin Dashboard</h1>
         <Accordion defaultActiveKey="0" flush>
