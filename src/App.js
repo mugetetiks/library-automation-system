@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import Header from './components/Header';
@@ -11,25 +11,27 @@ import AdminHomePage from './pages/AdminHomePage';
 import MemberHomePage from './pages/MemberHomePage';
 import Logout from './components/Logout';
 import AddDocument from './components/AddDocument';
+import UpdateDocument from './components/UpdateDocument';
+import UpdateDocumentSearch from './components/UpdateDocumentSearch';
 
 const App = () => {
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await axios.get('http://localhost:5000/api/auth/verify', { withCredentials: true });
-        setRole(res.data.role);
-      } catch (err) {
-        setRole(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    checkAuth();
+  const checkAuth = useCallback(async () => {
+    try {
+      const res = await axios.get('http://localhost:5000/api/auth/verify', { withCredentials: true });
+      setRole(res.data.role);
+    } catch (err) {
+      setRole(null);
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
 
   if (loading) return <div>Loading...</div>;
 
@@ -45,6 +47,8 @@ const App = () => {
           <Route path="/member" element={role === 'member' ? <MemberHomePage /> : <Navigate to="/login" replace />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/admin/add-document" element={role === 'admin' ? <AddDocument /> : <Navigate to="/login" replace />} />
+          <Route path="/admin/update-document" element={role === 'admin' ? <UpdateDocumentSearch /> : <Navigate to="/login" replace />} />
+          <Route path="/admin/update-document/:id" element={role === 'admin' ? <UpdateDocument /> : <Navigate to="/login" replace />} />
         </Routes>
       </div>
     </Router>

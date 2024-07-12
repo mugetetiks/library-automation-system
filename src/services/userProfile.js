@@ -1,34 +1,28 @@
-var UserProfile = (function() {
-    var getName = function() {
-      return localStorage.getItem('username');    
-    };
-  
-    var setName = function(name) {
-      localStorage.setItem('username', name);
-    };
-  
-    var getRole = function() {
-      return localStorage.getItem('role');    
-    };
-  
-    var setRole = function(role) {
-      localStorage.setItem('role', role);
-    };
-  
-    var clearProfile = function() {
-      localStorage.removeItem('username');
-      localStorage.removeItem('role');
-    };
-  
-    return {
-      getName: getName,
-      setName: setName,
-      getRole: getRole,
-      setRole: setRole,
-      clearProfile: clearProfile
-    }
-  
-  })();
-  
-  export default UserProfile;
-  
+const UserProfile = (() => {
+  let user = {};
+
+  const getName = () => {
+    return user.name;
+  };
+
+  const getRole = () => {
+    return user.role;
+  };
+
+  const setProfile = (name, role) => {
+    user = { name, role };
+  };
+
+  const clearProfile = () => {
+    user = {};
+  };
+
+  return {
+    getName,
+    getRole,
+    setProfile,
+    clearProfile
+  };
+})();
+
+export default UserProfile;
