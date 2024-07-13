@@ -14,6 +14,7 @@ import AddDocument from './components/AddDocument';
 import UpdateDocument from './components/UpdateDocument';
 import UpdateDocumentSearch from './components/UpdateDocumentSearch';
 import DeleteDocumentSearch from './components/DeleteDocumentSearch';
+import ReserveBook from './components/ReserveBook';
 import UserProfile from './services/userProfile';
 
 const App = () => {
@@ -58,6 +59,7 @@ const App = () => {
           <Route path="/admin/update-document" element={role === 'admin' ? <UpdateDocumentSearch /> : <Navigate to="/login" replace />} />
           <Route path="/admin/update-document/:id" element={role === 'admin' ? <UpdateDocument /> : <Navigate to="/login" replace />} />
           <Route path="/admin/delete-document" element={role === 'admin' ? <DeleteDocumentSearch /> : <Navigate to="/login" replace />} />
+          <Route path="/reserve" element={role === 'member' ? <ReserveBook /> : <Navigate to="/login" replace />} />
         </Routes>
       </div>
     </Router>

@@ -36,3 +36,16 @@ exports.deleteDocument = (req, res) => {
   });
 };
 
+exports.reserveBook = (req, res) => {
+  const { member_id, doc_id } = req.body;
+
+  db.query('SELECT * FROM reserved_books WHERE doc_id = ?', [doc_id], (err, results) => {
+    if (err) return res.status(500).json({ msg: 'Database error', error: err });
+    if (results.length > 0) return res.status(400).json({ msg: 'Book already reserved' });
+
+    db.query('INSERT INTO reserved_books (member_id, doc_id) VALUES (?, ?)', [member_id, doc_id], (err, result) => {
+      if (err) return res.status(500).json({ msg: 'Database error', error: err });
+      res.status(201).json({ msg: 'Book reserved successfully' });
+    });
+  });
+};

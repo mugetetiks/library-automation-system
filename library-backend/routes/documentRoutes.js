@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getDocuments, addDocument, deleteDocument } = require('../controllers/documentController');
+const { getDocuments, addDocument, deleteDocument, reserveBook } = require('../controllers/documentController');
 const multer = require('multer');
 
 // Multer setup for file uploads
@@ -19,7 +19,10 @@ const upload = multer({ storage: storage });
 router.post('/', upload.single('document'), addDocument);
 
 // Delete Document Endpoint
-router.delete('/:id', deleteDocument); // Bu satırın doğru olduğundan emin olun
+router.delete('/:id', deleteDocument);
+
+// Reserve Book Endpoint
+router.post('/reserve', reserveBook);
 
 // Get Document by ID Endpoint
 router.get('/:id', (req, res) => {

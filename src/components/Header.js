@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, Dropdown } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import UserProfile from '../services/userProfile';
 
@@ -17,9 +17,25 @@ const Header = ({ role }) => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link as={Link} to="/home">Home</Nav.Link>
-          <Nav.Link as={Link} to="/services">Services</Nav.Link>
-          <Nav.Link as={Link} to="/collections">Collections</Nav.Link>
+          <Dropdown as={Nav.Item}>
+            <Dropdown.Toggle as={Nav.Link}>Home</Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item as={Link} to="/home">Go to Home</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+          <Dropdown as={Nav.Item}>
+            <Dropdown.Toggle as={Nav.Link}>Services</Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item as={Link} to="/reserve">Reserve Book</Dropdown.Item>
+              <Dropdown.Item as={Link} to="/pay-debt">Pay Debt</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+          <Dropdown as={Nav.Item}>
+            <Dropdown.Toggle as={Nav.Link}>Collections</Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item as={Link} to="/collections">Collections</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </Nav>
         <Nav className="ml-auto">
           {role ? (
