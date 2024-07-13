@@ -1,24 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Accordion } from 'react-bootstrap';
-import { Link, useNavigate, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import UserProfile from '../services/userProfile';
 
 const AdminHomePage = () => {
   const navigate = useNavigate();
-  const [isAuthorized, setIsAuthorized] = useState(true);
 
   useEffect(() => {
     const username = UserProfile.getName();
     const role = UserProfile.getRole();
 
     if (!username || role !== 'admin') {
-      setIsAuthorized(false);
+      navigate('/login', { replace: true });
     }
-  }, []); // Adding navigate to dependency array to avoid warnings
-
-  // if (!isAuthorized) {
-  //   return <Navigate to="/login" replace />;
-  // }
+  }, [navigate]); // Adding navigate to dependency array to avoid warnings
 
   return (
     <div className="admin-homepage">
@@ -37,7 +32,7 @@ const AdminHomePage = () => {
               <ul>
                 <li><Link to="/admin/add-document">Add Document</Link></li>
                 <li><Link to="/admin/update-document">Update Document</Link></li>
-                <li>Delete Document</li>
+                <li><Link to="/admin/delete-document">Delete Document</Link></li>
               </ul>
             </Accordion.Body>
           </Accordion.Item>

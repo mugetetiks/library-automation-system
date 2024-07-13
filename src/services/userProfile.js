@@ -14,6 +14,7 @@ const UserProfile = (() => {
   };
 
   const clearProfile = () => {
+    console.log('Clearing user profile'); // Logging added for debugging
     user = {};
   };
 

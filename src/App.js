@@ -13,6 +13,8 @@ import Logout from './components/Logout';
 import AddDocument from './components/AddDocument';
 import UpdateDocument from './components/UpdateDocument';
 import UpdateDocumentSearch from './components/UpdateDocumentSearch';
+import DeleteDocumentSearch from './components/DeleteDocumentSearch';
+import UserProfile from './services/userProfile';
 
 const App = () => {
   const [role, setRole] = useState(null);
@@ -22,6 +24,7 @@ const App = () => {
     try {
       const res = await axios.get('http://localhost:5000/api/auth/verify', { withCredentials: true });
       setRole(res.data.role);
+      UserProfile.setProfile(res.data.username, res.data.role); // Set the user profile
     } catch (err) {
       setRole(null);
     } finally {
@@ -33,6 +36,10 @@ const App = () => {
     checkAuth();
   }, [checkAuth]);
 
+  const handleLogout = () => {
+    setRole(null);
+  };
+
   if (loading) return <div>Loading...</div>;
 
   return (
@@ -41,14 +48,16 @@ const App = () => {
         <Header role={role} />
         <Routes>
           <Route path="/" element={role ? (role === 'admin' ? <Navigate to="/admin" replace /> : <Navigate to="/member" replace />) : <><HomePage /><Footer /></>} />
-          <Route path="/login" element={role ? (role === 'admin' ? <Navigate to="/admin" replace /> : <Navigate to="/member" replace />) : <><Login /><Footer /></>} />
-          <Route path="/signup" element={<><Signup /><Footer /></>} />
+          <Route path="/home" element={<><HomePage /><Footer /></>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/admin" element={role === 'admin' ? <AdminHomePage /> : <Navigate to="/login" replace />} />
           <Route path="/member" element={role === 'member' ? <MemberHomePage /> : <Navigate to="/login" replace />} />
-          <Route path="/logout" element={<Logout />} />
+          <Route path="/logout" element={<Logout onLogout={handleLogout} />} />
           <Route path="/admin/add-document" element={role === 'admin' ? <AddDocument /> : <Navigate to="/login" replace />} />
           <Route path="/admin/update-document" element={role === 'admin' ? <UpdateDocumentSearch /> : <Navigate to="/login" replace />} />
           <Route path="/admin/update-document/:id" element={role === 'admin' ? <UpdateDocument /> : <Navigate to="/login" replace />} />
+          <Route path="/admin/delete-document" element={role === 'admin' ? <DeleteDocumentSearch /> : <Navigate to="/login" replace />} />
         </Routes>
       </div>
     </Router>

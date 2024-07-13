@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../config/db');
+const { getDocuments, addDocument, deleteDocument } = require('../controllers/documentController');
 const multer = require('multer');
 
 // Multer setup for file uploads
@@ -16,56 +16,10 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Add Document Endpoint
-router.post('/', upload.single('document'), (req, res) => {
-  const { doc_name, author, cat_id, dep_id } = req.body;
-  const doc_path = req.file.path;
+router.post('/', upload.single('document'), addDocument);
 
-  if (!doc_name || !author || !cat_id || !dep_id) {
-    return res.status(400).json({ msg: 'Please enter all fields' });
-  }
-
-  db.query(
-    `INSERT INTO document (doc_name, author, cat_id, dep_id, doc_path) VALUES (?, ?, ?, ?, ?)`,
-    [doc_name, author, cat_id, dep_id, doc_path],
-    (err, result) => {
-      if (err) {
-        console.error('Database error:', err);
-        return res.status(500).json({ msg: 'Database error', error: err });
-      }
-      res.status(201).json({ msg: 'Document added successfully' });
-    }
-  );
-});
-
-// Update Document Endpoint
-router.put('/:id', upload.single('document'), (req, res) => {
-  const { id } = req.params;
-  const { doc_name, author, cat_id, dep_id } = req.body;
-  const doc_path = req.file ? req.file.path : undefined;
-
-  if (!doc_name || !author || !cat_id || !dep_id) {
-    return res.status(400).json({ msg: 'Please enter all fields' });
-  }
-
-  let query = `UPDATE document SET doc_name = ?, author = ?, cat_id = ?, dep_id = ?`;
-  let values = [doc_name, author, cat_id, dep_id];
-
-  if (doc_path) {
-    query += `, doc_path = ?`;
-    values.push(doc_path);
-  }
-
-  query += ` WHERE doc_id = ?`;
-  values.push(id);
-
-  db.query(query, values, (err, result) => {
-    if (err) {
-      console.error('Database error:', err);
-      return res.status(500).json({ msg: 'Database error', error: err });
-    }
-    res.status(200).json({ msg: 'Document updated successfully' });
-  });
-});
+// Delete Document Endpoint
+router.delete('/:id', deleteDocument); // Bu satırın doğru olduğundan emin olun
 
 // Get Document by ID Endpoint
 router.get('/:id', (req, res) => {
@@ -93,13 +47,6 @@ router.get('/search', (req, res) => {
 });
 
 // Get All Documents Endpoint
-router.get('/', (req, res) => {
-  db.query('SELECT * FROM document', (err, results) => {
-    if (err) {
-      return res.status(500).json({ msg: 'Database error', error: err });
-    }
-    res.status(200).json(results);
-  });
-});
+router.get('/', getDocuments);
 
 module.exports = router;

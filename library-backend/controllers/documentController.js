@@ -26,3 +26,13 @@ exports.addDocument = [upload.single('document'), (req, res) => {
     }
   );
 }];
+
+exports.deleteDocument = (req, res) => {
+  const { id } = req.params;
+
+  db.query('DELETE FROM document WHERE doc_id = ?', [id], (err, result) => {
+    if (err) return res.status(500).json({ msg: 'Database error', error: err });
+    res.status(200).json({ msg: 'Document deleted successfully' });
+  });
+};
+

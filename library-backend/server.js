@@ -31,7 +31,7 @@ db.connect(err => {
 });
 
 app.use('/api/auth', authRoutes);
-app.use('/api/documents', documentRoutes);
+app.use('/api/documents', documentRoutes); // Bu satırın doğru olduğundan emin olun
 app.use('/api/categories', categoryRoutes);
 app.use('/api/departments', departmentRoutes);
 

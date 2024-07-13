@@ -16,7 +16,7 @@ const AdminNavbar = () => {
           <Nav.Link as={Link} to="/admin/catalogue">Catalogue</Nav.Link>
         </Nav>
         <Nav className="ml-auto">
-          <Nav.Link href="/login" className='login-signup-link'>
+          <Nav.Link as={Link} to="/logout" className='login-signup-link'>
             <i className="bi bi-person-fill"></i> Log out
           </Nav.Link>
         </Nav>
