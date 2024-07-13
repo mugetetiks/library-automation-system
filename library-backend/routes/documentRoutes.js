@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { getDocuments, addDocument, deleteDocument, reserveBook } = require('../controllers/documentController');
+const { getDocuments, addDocument, deleteDocument, searchDocuments } = require('../controllers/documentController');
+const { reserveBook } = require('../controllers/reserveController');
 const multer = require('multer');
 
 // Multer setup for file uploads
@@ -21,9 +22,6 @@ router.post('/', upload.single('document'), addDocument);
 // Delete Document Endpoint
 router.delete('/:id', deleteDocument);
 
-// Reserve Book Endpoint
-router.post('/reserve', reserveBook);
-
 // Get Document by ID Endpoint
 router.get('/:id', (req, res) => {
   const { id } = req.params;
@@ -35,21 +33,13 @@ router.get('/:id', (req, res) => {
   });
 });
 
-// Search Documents Endpoint
-router.get('/search', (req, res) => {
-  const { query } = req.query;
-  console.log(`Search query: ${query}`); // Loglama için eklendi
-  db.query('SELECT * FROM document WHERE doc_name LIKE ? OR author LIKE ?', [`%${query}%`, `%${query}%`], (err, results) => {
-    if (err) {
-      console.error('Database error:', err);
-      return res.status(500).json({ msg: 'Database error', error: err });
-    }
-    console.log('Search results:', results); // Loglama için eklendi
-    res.status(200).json(results);
-  });
-});
-
 // Get All Documents Endpoint
 router.get('/', getDocuments);
+
+// Search Documents Endpoint
+router.get('/search', searchDocuments);
+
+// Reserve Book Endpoint
+router.post('/reserve', reserveBook);
 
 module.exports = router;

@@ -1,35 +1,78 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import UserProfile from '../services/userProfile';
 
 const ReserveBook = () => {
-  const [docId, setDocId] = useState('');
-  const [message, setMessage] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [documents, setDocuments] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
+  const [reservedBook, setReservedBook] = useState(null);
 
-  const handleReserve = async () => {
+  useEffect(() => {
+    const fetchDocuments = async () => {
+      try {
+        const res = await axios.get('http://localhost:5000/api/documents', { withCredentials: true });
+        setDocuments(res.data);
+      } catch (err) {
+        console.error('Error fetching documents:', err);
+      }
+    };
+
+    fetchDocuments();
+  }, []);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const results = documents.filter((doc) =>
+      doc.doc_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      doc.author.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setSearchResults(results);
+  };
+
+  const handleReserve = async (bookId) => {
     try {
-      const memberId = UserProfile.getName(); // Member ID'yi alalım
-      const res = await axios.post('http://localhost:5000/api/documents/reserve', {
-        member_id: memberId,
-        doc_id: docId
-      }, { withCredentials: true });
-      setMessage(res.data.msg);
+      const res = await axios.post('http://localhost:5000/api/documents/reserve', { bookId }, { withCredentials: true });
+      alert('Book reserved successfully');
+      setReservedBook(res.data);
     } catch (err) {
-      setMessage(err.response.data.msg);
+      console.error('Error reserving book:', err);
+      alert('Error reserving book');
     }
   };
 
   return (
-    <div>
-      <h2>Reserve Book</h2>
-      <input 
-        type="text" 
-        value={docId} 
-        onChange={(e) => setDocId(e.target.value)} 
-        placeholder="Document ID" 
-      />
-      <button onClick={handleReserve}>Reserve</button>
-      {message && <p>{message}</p>}
+    <div className="reserve-book">
+      <h1>Reserve Book</h1>
+      <form onSubmit={handleSearch}>
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search for a book..."
+          required
+        />
+        <button type="submit">Search</button>
+      </form>
+      <div className="search-results">
+        {searchResults.length > 0 ? (
+          <ul>
+            {searchResults.map((book) => (
+              <li key={book.doc_id}>
+                {book.doc_name} by {book.author}
+                <button onClick={() => handleReserve(book.doc_id)}>Reserve</button>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No books found</p>
+        )}
+      </div>
+      {reservedBook && (
+        <div className="reserved-book">
+          <h2>Reserved Book:</h2>
+          <p>{reservedBook.doc_name} by {reservedBook.author}</p>
+        </div>
+      )}
     </div>
   );
 };

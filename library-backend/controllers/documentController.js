@@ -36,16 +36,23 @@ exports.deleteDocument = (req, res) => {
   });
 };
 
-exports.reserveBook = (req, res) => {
-  const { member_id, doc_id } = req.body;
+exports.searchDocuments = (req, res) => {
+  const { query } = req.query;
 
-  db.query('SELECT * FROM reserved_books WHERE doc_id = ?', [doc_id], (err, results) => {
-    if (err) return res.status(500).json({ msg: 'Database error', error: err });
-    if (results.length > 0) return res.status(400).json({ msg: 'Book already reserved' });
+  console.log('Search query:', query); // Hata ayıklama için eklendi
 
-    db.query('INSERT INTO reserved_books (member_id, doc_id) VALUES (?, ?)', [member_id, doc_id], (err, result) => {
-      if (err) return res.status(500).json({ msg: 'Database error', error: err });
-      res.status(201).json({ msg: 'Book reserved successfully' });
-    });
+  const sqlQuery = 'SELECT * FROM document WHERE doc_name LIKE ? OR author LIKE ?';
+  const values = [`%${query}%`, `%${query}%`];
+
+  console.log('SQL Query:', sqlQuery); // Hata ayıklama için eklendi
+  console.log('Values:', values); // Hata ayıklama için eklendi
+
+  db.query(sqlQuery, values, (err, results) => {
+    if (err) {
+      console.error('Database error:', err); // Hata ayıklama için eklendi
+      return res.status(500).json({ msg: 'Database error', error: err });
+    }
+    console.log('Search results:', results); // Hata ayıklama için eklendi
+    res.status(200).json(results);
   });
 };
