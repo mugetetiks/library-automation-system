@@ -33,7 +33,7 @@ const ReserveBook = () => {
     try {
       const res = await axios.post('http://localhost:5000/api/documents/reserve', { bookId }, { withCredentials: true });
       alert('Book reserved successfully');
-      setReservedBook(res.data);
+      setReservedBook(res.data.reservedBook);
     } catch (err) {
       console.error('Error reserving book:', err);
       alert('Error reserving book');

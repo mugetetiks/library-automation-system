@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useEffect, useState, useCallback } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -51,7 +51,7 @@ const App = () => {
       <div className="d-flex flex-column min-vh-100">
         <Header role={role} />
         <Routes>
-          <Route path="/" element={role ? (role === 'admin' ? <Navigate to="/admin" replace /> : <Navigate to="/reserve" replace />) : <><HomePage /><Footer /></>} />
+          <Route path="/" element={<Navigate to="/home" replace />} />
           <Route path="/home" element={<><HomePage /><Footer /></>} />
           <Route path="/login" element={<Login onLogin={handleLogin} />} />
           <Route path="/signup" element={<Signup />} />

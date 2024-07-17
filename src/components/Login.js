@@ -17,7 +17,7 @@ const Login = ({ onLogin }) => {
       alert(res.data.msg);
       UserProfile.setProfile(username, role);
       onLogin(role);
-      const from = location.state?.from?.pathname || '/home';
+      const from = location.state?.from?.pathname || (role === 'admin' ? '/admin' : '/home');
       navigate(from, { replace: true });
     } catch (err) {
       console.error('Login error:', err);

@@ -42,6 +42,11 @@ const AddDocument = () => {
     formData.append('cat_id', catId);
     formData.append('dep_id', depId);
 
+    // FormData'nın içeriğini kontrol etmek için console.log ekleyelim
+    for (let pair of formData.entries()) {
+      console.log(pair[0] + ': ' + pair[1]);
+    }
+
     try {
       await axios.post('http://localhost:5000/api/documents', formData, {
         headers: {

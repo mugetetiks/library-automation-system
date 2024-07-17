@@ -8,7 +8,11 @@ const Header = ({ role }) => {
 
   const handleLogoClick = (e) => {
     e.preventDefault();
-    navigate('/home');
+    if (role === 'admin') {
+      navigate('/admin');
+    } else {
+      navigate('/home');
+    }
   };
 
   return (
