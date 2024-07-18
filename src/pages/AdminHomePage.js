@@ -51,8 +51,8 @@ const AdminHomePage = () => {
             <Accordion.Body>
               <ul>
                 <li><Link to="/admin/confirm-hand-over">Confirm Hand-over</Link></li>
+                <li><Link to="/admin/view-reserved-books">View Reserved Books</Link></li>
                 <li>Confirm Payment</li>
-                <li>View Reserved Books</li>
                 <li>View Overdue Books</li>
               </ul>
             </Accordion.Body>

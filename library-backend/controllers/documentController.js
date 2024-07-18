@@ -125,3 +125,19 @@ exports.confirmHandOver = (req, res) => {
     res.status(200).json({ msg: 'Book hand-over confirmed successfully' });
   });
 };
+
+exports.viewReservedBooks = (req, res) => {
+  const query = `
+    SELECT rb.reservation_id, rb.reserved_at, m.userName as reserved_by, d.doc_name, d.author
+    FROM reserved_books rb
+    JOIN member m ON rb.member_id = m.memberID
+    JOIN document d ON rb.doc_id = d.doc_id
+  `;
+  
+  db.query(query, (err, results) => {
+    if (err) {
+      return res.status(500).json({ msg: 'Database error', error: err });
+    }
+    res.status(200).json(results);
+  });
+};

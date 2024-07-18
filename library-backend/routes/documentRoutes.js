@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { addDocument, deleteDocument, reserveDocument, getDocuments, getDocumentById, updateDocument, confirmHandOver, getReservedBooks } = require('../controllers/documentController');
+const { addDocument, deleteDocument, reserveDocument, getDocuments, getDocumentById, updateDocument, confirmHandOver, getReservedBooks, viewReservedBooks } = require('../controllers/documentController');
 const { verifyToken } = require('../middleware/authMiddleware');
 const multer = require('multer');
 
@@ -18,7 +18,8 @@ const upload = multer({ storage: storage });
 router.post('/', upload.single('document'), addDocument);
 router.delete('/:id', deleteDocument);
 router.post('/reserve', verifyToken, reserveDocument);
-router.get('/reserved', verifyToken, getReservedBooks); // Bu rotanın doğru olduğundan emin olun
+router.get('/reserved', verifyToken, getReservedBooks);
+router.get('/view-reserved-books', verifyToken, viewReservedBooks); // Bu satırın doğru olduğundan emin olun
 router.get('/:id', getDocumentById);
 router.put('/:id', upload.single('document'), updateDocument);
 router.delete('/confirm-hand-over/:id', verifyToken, confirmHandOver);

@@ -16,6 +16,7 @@ import DeleteDocumentSearch from './components/DeleteDocumentSearch';
 import ReserveBook from './components/ReserveBook';
 import ConfirmHandOver from './components/ConfirmHandOver';
 import UserProfile from './services/userProfile';
+import ViewReservedBooks from './components/ViewReservedBooks';
 
 const App = () => {
   const [role, setRole] = useState(null);
@@ -64,6 +65,7 @@ const App = () => {
           <Route path="/admin/delete-document" element={role === 'admin' ? <DeleteDocumentSearch /> : <Navigate to="/login" replace />} />
           <Route path="/reserve" element={role === 'member' ? <ReserveBook /> : <Navigate to="/login" replace state={{ from: '/reserve' }} />} />
           <Route path="/admin/confirm-hand-over" element={role === 'admin' ? <ConfirmHandOver /> : <Navigate to="/login" replace />} />
+          <Route path="/admin/view-reserved-books" element={role === 'admin' ? <ViewReservedBooks /> : <Navigate to="/login" replace />} />
         </Routes>
       </div>
     </Router>
