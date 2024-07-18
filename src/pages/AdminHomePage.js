@@ -50,7 +50,7 @@ const AdminHomePage = () => {
             <Accordion.Header>Services</Accordion.Header>
             <Accordion.Body>
               <ul>
-                <li>Confirm Hand-over</li>
+                <li><Link to="/admin/confirm-hand-over">Confirm Hand-over</Link></li>
                 <li>Confirm Payment</li>
                 <li>View Reserved Books</li>
                 <li>View Overdue Books</li>

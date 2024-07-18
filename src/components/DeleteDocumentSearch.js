@@ -11,14 +11,14 @@ const DeleteDocumentSearch = () => {
       try {
         const res = await axios.get('http://localhost:5000/api/documents', { withCredentials: true });
         setDocuments(res.data);
-        setFilteredDocuments(res.data); // Başlangıçta tüm documentleri göster
+        setFilteredDocuments(res.data);
       } catch (err) {
         console.error('Error fetching documents:', err);
       }
     };
 
     fetchDocuments();
-  }, []); // Burada bağımlılık dizisi boş olmalı, sadece bir kez çalışacak
+  }, []);
 
   const handleSearch = (e) => {
     const searchQuery = e.target.value;
@@ -30,22 +30,20 @@ const DeleteDocumentSearch = () => {
     setFilteredDocuments(filtered);
   };
 
-  const handleDeleteDocument = async (id) => {
-    if (window.confirm('Are you sure you want to delete this document?')) {
-      try {
-        await axios.delete(`http://localhost:5000/api/documents/${id}`, { withCredentials: true });
-        alert('Document deleted successfully');
-        setFilteredDocuments(filteredDocuments.filter(doc => doc.doc_id !== id));
-      } catch (err) {
-        console.error('Error deleting document:', err);
-        alert('Error deleting document');
-      }
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/api/documents/${id}`, { withCredentials: true });
+      alert('Document deleted successfully');
+      setFilteredDocuments(filteredDocuments.filter(doc => doc.doc_id !== id));
+    } catch (err) {
+      console.error('Error deleting document:', err);
+      alert('Error deleting document');
     }
   };
 
   return (
     <div className="delete-document-search">
-      <h1>Delete Document</h1>
+      <h1>Search for Document to Delete</h1>
       <input
         type="text"
         value={query}
@@ -56,7 +54,7 @@ const DeleteDocumentSearch = () => {
         {filteredDocuments.map(doc => (
           <li key={doc.doc_id}>
             {doc.doc_name} - {doc.author}
-            <button onClick={() => handleDeleteDocument(doc.doc_id)}>Delete</button>
+            <button onClick={() => handleDelete(doc.doc_id)}>Delete</button>
           </li>
         ))}
       </ul>

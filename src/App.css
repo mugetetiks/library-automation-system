@@ -109,6 +109,9 @@ body {
 .event-card {
   margin: 20px;
   text-align: center;
+  display: inline-block;
+  vertical-align: top;
+  width: 200px;
 }
 
 .event-card img {
@@ -204,4 +207,14 @@ footer {
   padding: 10px;
   background-color: #f4dcd0;
   border-radius: 5px;
+}
+
+.document-card img {
+  width: 150px;
+  height: 200px;
+}
+
+.document-details img {
+  width: 200px;
+  height: auto;
 }

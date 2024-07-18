@@ -8,16 +8,12 @@ const Header = ({ role }) => {
 
   const handleLogoClick = (e) => {
     e.preventDefault();
-    if (role === 'admin') {
-      navigate('/admin');
-    } else {
-      navigate('/home');
-    }
+    navigate(role === 'admin' ? '/admin' : '/home');
   };
 
   return (
     <Navbar className="header" expand="lg">
-      <Navbar.Brand as={Link} to="/home" onClick={handleLogoClick}>Narnia Library</Navbar.Brand>
+      <Navbar.Brand as={Link} to="#" onClick={handleLogoClick}>Narnia Library</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
@@ -38,6 +34,12 @@ const Header = ({ role }) => {
             <Dropdown.Toggle as={Nav.Link}>Collections</Dropdown.Toggle>
             <Dropdown.Menu>
               <Dropdown.Item as={Link} to="/collections">Collections</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+          <Dropdown as={Nav.Item}>
+            <Dropdown.Toggle as={Nav.Link}>Documents</Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item as={Link} to="/documents">View Documents</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </Nav>

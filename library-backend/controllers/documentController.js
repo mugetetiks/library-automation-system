@@ -9,6 +9,15 @@ exports.getDocuments = (req, res) => {
   });
 };
 
+exports.getDocumentById = (req, res) => {
+  const { id } = req.params;
+  db.query('SELECT * FROM document WHERE doc_id = ?', [id], (err, results) => {
+    if (err) return res.status(500).json({ msg: 'Database error', error: err });
+    if (results.length === 0) return res.status(404).json({ msg: 'Document not found' });
+    res.status(200).json(results[0]);
+  });
+};
+
 exports.addDocument = (req, res) => {
   const { doc_name, author, cat_id, dep_id } = req.body;
   const doc_path = req.file.path;
@@ -27,11 +36,38 @@ exports.addDocument = (req, res) => {
   );
 };
 
+exports.updateDocument = (req, res) => {
+  const { id } = req.params;
+  const { doc_name, author, cat_id, dep_id } = req.body;
+  const doc_path = req.file ? req.file.path : null;
+
+  db.query('SELECT * FROM document WHERE doc_id = ?', [id], (err, results) => {
+    if (err) return res.status(500).json({ msg: 'Database error', error: err });
+    if (results.length === 0) return res.status(404).json({ msg: 'Document not found' });
+
+    const query = doc_path
+      ? `UPDATE document SET doc_name = ?, author = ?, cat_id = ?, dep_id = ?, doc_path = ? WHERE doc_id = ?`
+      : `UPDATE document SET doc_name = ?, author = ?, cat_id = ?, dep_id = ? WHERE doc_id = ?`;
+
+    const values = doc_path
+      ? [doc_name, author, cat_id, dep_id, doc_path, id]
+      : [doc_name, author, cat_id, dep_id, id];
+
+    db.query(query, values, (err, result) => {
+      if (err) return res.status(500).json({ msg: 'Database error', error: err });
+      res.status(200).json({ msg: 'Document updated successfully' });
+    });
+  });
+};
+
 exports.deleteDocument = (req, res) => {
   const { id } = req.params;
 
   db.query('DELETE FROM document WHERE doc_id = ?', [id], (err, result) => {
-    if (err) return res.status(500).json({ msg: 'Database error', error: err });
+    if (err) {
+      console.error('Error deleting document:', err);
+      return res.status(500).json({ msg: 'Database error', error: err });
+    }
     res.status(200).json({ msg: 'Document deleted successfully' });
   });
 };
@@ -64,5 +100,28 @@ exports.reserveDocument = (req, res) => {
         });
       });
     });
+  });
+};
+
+exports.getReservedBooks = (req, res) => {
+  db.query(`
+    SELECT rb.reservation_id, d.doc_name, d.author 
+    FROM reserved_books rb 
+    JOIN document d ON rb.doc_id = d.doc_id
+  `, (err, results) => {
+    if (err) return res.status(500).json({ msg: 'Database error', error: err });
+    res.status(200).json(results);
+  });
+};
+
+exports.confirmHandOver = (req, res) => {
+  const { id } = req.params; // reserved_book id
+
+  db.query('DELETE FROM reserved_books WHERE reservation_id = ?', [id], (err, result) => {
+    if (err) {
+      console.error('Database error:', err);
+      return res.status(500).json({ msg: 'Database error', error: err });
+    }
+    res.status(200).json({ msg: 'Book hand-over confirmed successfully' });
   });
 };

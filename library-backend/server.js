@@ -23,7 +23,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/uploads', express.static('uploads'));
 
-// Bu satırı ekleyin
 app.use(bodyParser.text({ type: '/' }));
 
 db.connect(err => {
