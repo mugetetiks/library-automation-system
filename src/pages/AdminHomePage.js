@@ -27,7 +27,7 @@ const AdminHomePage = () => {
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="1">
-            <Accordion.Header>Catalogue</Accordion.Header>
+            <Accordion.Header>Documents</Accordion.Header>
             <Accordion.Body>
               <ul>
                 <li><Link to="/admin/add-document">Add Document</Link></li>
@@ -40,9 +40,9 @@ const AdminHomePage = () => {
             <Accordion.Header>Collections</Accordion.Header>
             <Accordion.Body>
               <ul>
-                <li>Add Collection</li>
-                <li>Update Collection</li>
-                <li>Delete Collection</li>
+                <li><Link to="/admin/add-collection">Add Collection</Link></li>
+                <li><Link to="/admin/update-collection">Update Collection</Link></li>
+                <li><Link to="/admin/delete-collection">Delete Collection</Link></li>
               </ul>
             </Accordion.Body>
           </Accordion.Item>

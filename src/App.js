@@ -18,8 +18,14 @@ import ConfirmHandOver from './components/ConfirmHandOver';
 import UserProfile from './services/userProfile';
 import ViewReservedBooks from './components/ViewReservedBooks';
 import ViewOverdueBooks from './components/ViewOverdueBooks';
-import ConfirmPayment from './components/ConfirmPayment'; // ConfirmPayment bileşeni ekleyin
-
+import ConfirmPayment from './components/ConfirmPayment'; 
+import Documents from './components/Documents'; // Documents bileşenini import edin
+import DocumentDetails from './components/DocumentDetails'; // DocumentDetails bileşenini import edin
+import Collections from './components/Collections';
+import AddCollection from './components/AddCollection';
+import UpdateCollection from './components/UpdateCollection';
+import UpdateCollectionSearch from './components/UpdateCollectionSearch';
+import DeleteCollectionSearch from './components/DeleteCollectionSearch';
 const App = () => {
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -69,7 +75,14 @@ const App = () => {
           <Route path="/admin/confirm-hand-over" element={role === 'admin' ? <ConfirmHandOver /> : <Navigate to="/login" replace />} />
           <Route path="/admin/view-reserved-books" element={role === 'admin' ? <ViewReservedBooks /> : <Navigate to="/login" replace />} />
           <Route path="/admin/view-overdue-books" element={role === 'admin' ? <ViewOverdueBooks /> : <Navigate to="/login" replace />} />
-          <Route path="/admin/confirm-payment" element={role === 'admin' ? <ConfirmPayment /> : <Navigate to="/login" replace />} /> {/* ConfirmPayment route ekleyin */}
+          <Route path="/admin/confirm-payment" element={role === 'admin' ? <ConfirmPayment /> : <Navigate to="/login" replace />} /> 
+          <Route path="/documents" element={<Documents />} /> {/* Documents bileşeni için route ekleyin */}
+          <Route path="/documents/:id" element={<DocumentDetails />} /> {/* DocumentDetails bileşeni için route ekleyin */}
+          <Route path="/collections" element={<Collections />} />
+          <Route path="/admin/add-collection" element={role === 'admin' ? <AddCollection /> : <Navigate to="/login" replace />} />
+          <Route path="/admin/update-collection" element={role === 'admin' ? <UpdateCollectionSearch /> : <Navigate to="/login" replace />} />
+          <Route path="/admin/update-collection/:id" element={role === 'admin' ? <UpdateCollection /> : <Navigate to="/login" replace />} />
+          <Route path="/admin/delete-collection" element={role === 'admin' ? <DeleteCollectionSearch /> : <Navigate to="/login" replace />} />
         </Routes>
       </div>
     </Router>

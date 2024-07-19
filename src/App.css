@@ -209,12 +209,45 @@ footer {
   border-radius: 5px;
 }
 
-.document-card img {
-  width: 150px;
-  height: 200px;
+.documents {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* 3 sütun oluşturur, ekran boyutuna göre otomatik ayarlanır */
+  gap: 20px; /* Kartlar arasında boşluk bırakır */
+  margin-top: 20px;
 }
 
-.document-details img {
-  width: 200px;
+.document-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+}
+
+.document-card img {
+  width: 100%;
   height: auto;
+  border-radius: 5px;
+}
+
+.document-card h3 {
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+.document-card p {
+  color: #777;
+  font-size: 14px;
+}
+
+.document-card a {
+  display: inline-block;
+  margin-top: 10px;
+  color: #5b0404;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.document-card a:hover {
+  text-decoration: underline;
 }

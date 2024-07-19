@@ -27,7 +27,6 @@ const Header = ({ role }) => {
             <Dropdown.Toggle as={Nav.Link}>Services</Dropdown.Toggle>
             <Dropdown.Menu>
               <Dropdown.Item as={Link} to="/reserve">Reserve Book</Dropdown.Item>
-              <Dropdown.Item as={Link} to="/pay-debt">Pay Debt</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
           <Dropdown as={Nav.Item}>

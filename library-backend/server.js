@@ -7,6 +7,7 @@ const documentRoutes = require('./routes/documentRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const departmentRoutes = require('./routes/departmentRoutes');
 const debtRoutes = require('./routes/debtRoutes'); // debtRoutes eklendi
+const collectionRoutes = require('./routes/collectionRoutes'); 
 const db = require('./config/db');
 
 const app = express();
@@ -37,6 +38,7 @@ app.use('/api/documents', documentRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/departments', departmentRoutes);
 app.use('/api/debt', debtRoutes); // debtRoutes eklendi
+app.use('/api/collections', collectionRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
