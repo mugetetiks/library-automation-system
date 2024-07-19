@@ -117,14 +117,31 @@ exports.getReservedBooks = (req, res) => {
 exports.confirmHandOver = (req, res) => {
   const { id } = req.params; // reserved_book id
 
-  db.query('DELETE FROM reserved_books WHERE reservation_id = ?', [id], (err, result) => {
+  // Önce, bu reservation_id için debt tablosunda bir kayıt olup olmadığını kontrol edelim
+  const checkQuery = `
+    SELECT * FROM debt WHERE reservation_id = ?
+  `;
+
+  db.query(checkQuery, [id], (err, results) => {
     if (err) {
-      console.error('Database error:', err);
       return res.status(500).json({ msg: 'Database error', error: err });
     }
-    res.status(200).json({ msg: 'Book hand-over confirmed successfully' });
+
+    if (results.length > 0) {
+      return res.status(400).json({ msg: 'Pay debt before handover' });
+    }
+
+    // Eğer borç yoksa, rezervasyonu silelim
+    db.query('DELETE FROM reserved_books WHERE reservation_id = ?', [id], (err, result) => {
+      if (err) {
+        console.error('Database error:', err);
+        return res.status(500).json({ msg: 'Database error', error: err });
+      }
+      res.status(200).json({ msg: 'Book hand-over confirmed successfully' });
+    });
   });
 };
+
 
 exports.viewReservedBooks = (req, res) => {
   const query = `

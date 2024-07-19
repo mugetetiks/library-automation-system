@@ -13,7 +13,7 @@ const AdminHomePage = () => {
     if (!username || role !== 'admin') {
       navigate('/login', { replace: true });
     }
-  }, [navigate]); // Adding navigate to dependency array to avoid warnings
+  }, [navigate]);
 
   return (
     <div className="admin-homepage">
@@ -52,8 +52,8 @@ const AdminHomePage = () => {
               <ul>
                 <li><Link to="/admin/confirm-hand-over">Confirm Hand-over</Link></li>
                 <li><Link to="/admin/view-reserved-books">View Reserved Books</Link></li>
-                <li>Confirm Payment</li>
-                <li>View Overdue Books</li>
+                <li><Link to="/admin/confirm-payment">Confirm Payment</Link></li>
+                <li><Link to="/admin/view-overdue-books">View Overdue Books</Link></li>
               </ul>
             </Accordion.Body>
           </Accordion.Item>

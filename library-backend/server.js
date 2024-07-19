@@ -6,6 +6,7 @@ const authRoutes = require('./routes/authRoutes');
 const documentRoutes = require('./routes/documentRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const departmentRoutes = require('./routes/departmentRoutes');
+const debtRoutes = require('./routes/debtRoutes'); // debtRoutes eklendi
 const db = require('./config/db');
 
 const app = express();
@@ -23,8 +24,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/uploads', express.static('uploads'));
 
-app.use(bodyParser.text({ type: '/' }));
-
 db.connect(err => {
   if (err) {
     console.error('Error connecting to the database:', err);
@@ -34,9 +33,10 @@ db.connect(err => {
 });
 
 app.use('/api/auth', authRoutes);
-app.use('/api/documents', documentRoutes); // Bu satırın doğru olduğundan emin olun
+app.use('/api/documents', documentRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/departments', departmentRoutes);
+app.use('/api/debt', debtRoutes); // debtRoutes eklendi
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

@@ -27,7 +27,7 @@ const ConfirmHandOver = () => {
         setSelectedBook(null);
       } catch (err) {
         console.error('Error confirming hand-over:', err);
-        alert('Error confirming hand-over');
+        alert(err.response?.data?.msg || 'Error confirming hand-over');
       }
     } else {
       alert('Please select a book to confirm hand-over.');

@@ -17,6 +17,8 @@ import ReserveBook from './components/ReserveBook';
 import ConfirmHandOver from './components/ConfirmHandOver';
 import UserProfile from './services/userProfile';
 import ViewReservedBooks from './components/ViewReservedBooks';
+import ViewOverdueBooks from './components/ViewOverdueBooks';
+import ConfirmPayment from './components/ConfirmPayment'; // ConfirmPayment bileşeni ekleyin
 
 const App = () => {
   const [role, setRole] = useState(null);
@@ -26,7 +28,7 @@ const App = () => {
     try {
       const res = await axios.get('http://localhost:5000/api/auth/verify', { withCredentials: true });
       setRole(res.data.role);
-      UserProfile.setProfile(res.data.username, res.data.role); // Set the user profile
+      UserProfile.setProfile(res.data.username, res.data.role);
     } catch (err) {
       setRole(null);
     } finally {
@@ -66,6 +68,8 @@ const App = () => {
           <Route path="/reserve" element={role === 'member' ? <ReserveBook /> : <Navigate to="/login" replace state={{ from: '/reserve' }} />} />
           <Route path="/admin/confirm-hand-over" element={role === 'admin' ? <ConfirmHandOver /> : <Navigate to="/login" replace />} />
           <Route path="/admin/view-reserved-books" element={role === 'admin' ? <ViewReservedBooks /> : <Navigate to="/login" replace />} />
+          <Route path="/admin/view-overdue-books" element={role === 'admin' ? <ViewOverdueBooks /> : <Navigate to="/login" replace />} />
+          <Route path="/admin/confirm-payment" element={role === 'admin' ? <ConfirmPayment /> : <Navigate to="/login" replace />} /> {/* ConfirmPayment route ekleyin */}
         </Routes>
       </div>
     </Router>
